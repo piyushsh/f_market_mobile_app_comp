@@ -1,0 +1,177 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+  padding: 0px;
+  margin: 0px;
+  line-height: 150%;
+  color: #7f7f7f; }
+
+p {
+  line-height: 150%;
+  font-weight: 400;
+  margin-bottom: 15px; }
+
+.container {
+  max-width: 960px; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  margin: 0px;
+  padding: 0px;
+  margin-bottom: 25px;
+  margin-top: 10px;
+  color: #7f7f7f;
+  font-size: 20px; }
+
+h3, h4, h5, h6 {
+  margin-bottom: 15px; }
+
+/*
+* Common style for elements in whole application
+*/
+.label {
+  font-size: 14px;
+  color: #7f7f7f;
+  margin: 5px;
+  display: inline-block;
+  padding: 0px; }
+
+.input_fd_cont {
+  width: 100%;
+  margin-bottom: 25px; }
+
+.next_step_button {
+  color: #FFFFFF;
+  background: #00af50;
+  padding: 20px 50px;
+  font-size: 16px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  line-height: 100%; }
+
+input[type='text'], input[type='password'], input[type='file'], select, textarea {
+  background: #f2f2f2;
+  color: #7f7f7f;
+  padding: 10px 5px;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  border: 2px solid #d9d9d9;
+  resize: none; }
+
+textarea {
+  height: 100px; }
+
+/*
+* Header Style
+*/
+header {
+  background: #f2f2f2;
+  padding: 15px 0px;
+  border-bottom: 1px solid #eeece1;
+  margin-bottom: 25px; }
+  header
+.logo {
+    padding: 5px; }
+    header
+.logo
+img {
+      width: 100%;
+      height: auto; }
+
+/*
+* Home/Welcome page style
+*/
+.home_page
+.intro_paragraph {
+  margin-bottom: 50px;
+  background: #f2f2f2; }
+  .home_page
+.intro_paragraph
+p {
+    font-size: 28px;
+    font-weight: 700;
+    padding: 30px 15px;
+    color: #7f7f7f;
+    line-height: 120%; }
+
+.home_page input[type='text'][type='password'], .home_page select, .home_page
+button {
+  width: 100%; }
+
+/*
+* Contact Information Page
+*/
+.personal_info_page
+.intro_paragraph {
+  margin-bottom: 25px;
+  background: #f2f2f2; }
+  .personal_info_page
+.intro_paragraph
+h4 {
+    font-size: 16px;
+    font-weight: 600; }
+  .personal_info_page
+.intro_paragraph
+p {
+    font-weight: 400;
+    font-size: 14px; }
+
+.personal_info_page
+h2 {
+  color: #3dc279;
+  font-size: 20px;
+  font-weight: 400; }
+
+.personal_info_page
+.input_fd_cont input, .personal_info_page
+.input_fd_cont
+button {
+  width: 100%; }
+
+/*
+* Idea page styles
+*/
+.idea
+.intro_paragraph {
+  margin-bottom: 25px;
+  background: #f2f2f2; }
+  .idea
+.intro_paragraph
+h4 {
+    font-size: 16px;
+    font-weight: 600; }
+  .idea
+.intro_paragraph
+p {
+    font-weight: 400;
+    font-size: 14px; }
+
+.idea
+h2 {
+  color: #3dc279;
+  font-size: 20px;
+  font-weight: 400; }
+
+.idea
+.input_fd_cont input, .idea
+.input_fd_cont select, .idea
+.input_fd_cont button, .idea
+.input_fd_cont
+textarea {
+  width: 100%; }
+
+.thank-you
+h1 {
+  font-size: 24px;
+  color: #3dc279;
+  margin-bottom: 25px;
+  font-weight: 600; }
+
+.thank-you
+p {
+  font-size: 16px;
+  line-height: 150%; }
+
+/*# sourceMappingURL=app-style.css.map */

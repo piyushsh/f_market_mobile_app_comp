@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{asset('css/app-style.css')}}">
 
 </head>
-<body>
+<body ng-controller="AppController">
 
     <header>
         <div class="container">
@@ -33,5 +33,6 @@
     <!-- Angular Script Files -->
     <script src="{{asset('app/app.js')}}"></script>
     <script src="{{asset('app/home/home.js')}}"></script>
+    <script src="{{asset('app/personal_info/contact_info.js')}}"></script>
 </body>
 </html>

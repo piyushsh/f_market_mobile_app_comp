@@ -3,7 +3,7 @@
  */
 'use strict';
 
-var fmApp = angular.module('fm_app',['ngRoute','fm_app.home']);
+var fmApp = angular.module('fm_app',['ngRoute','fm_app.home','fm_app.contact_info']);
 
 fmApp.config(['$routeProvider',function($routeProvider){
     $routeProvider
@@ -30,6 +30,28 @@ fmApp.config(['$routeProvider',function($routeProvider){
         .when('/thank-you',{
             templateUrl : 'app/thank-you.html'
         });
+}]);
+
+fmApp.controller('AppController',['$http','$scope',function($http,$scope){
+    $scope.sessionId;
+
+    $scope.countryList;
+
+    $scope.init = function()
+    {
+        $http.get('initialize').success(function(data){
+            $scope.sessionId = data.session_id;
+            $scope.countryList = data.countries;
+        })
+            .error(function(data){
+                console.log("Error : " + data);
+            });
+
+        $scope.area_residence = "";
+    };
+
+    $scope.init();
+
 }]);
 
 

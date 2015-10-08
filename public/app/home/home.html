@@ -17,9 +17,7 @@
                 <div class="input_fd_cont">
                     <select name="area_residence" ng-model="area_residence">
                         <option value="">Select your area of residence</option>
-                        <option value="europe">Europe</option>
-                        <option value="africa">Africa</option>
-                        <option value="others">Others</option>
+                        <option ng-repeat="option in countryList" value="{{option.key}}">{{option.country}}</option>
                     </select>
                 </div>
 

@@ -11,6 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('app');
-});
+Route::get('/', 'WelcomeController@index');
+
+
+/*
+ * API Routes
+ */
+
+Route::get('/initialize','API\WelcomeAPIController@initializeWelcomeView');

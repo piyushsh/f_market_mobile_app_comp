@@ -18,4 +18,11 @@ Route::get('/', 'WelcomeController@index');
  * API Routes
  */
 
+/*---------- GET REQUESTS ------------*/
 Route::get('/initialize','API\WelcomeAPIController@initializeWelcomeView');
+Route::get('/user-data','API\WelcomeAPIController@userData');
+
+
+
+/*---------- POSTS REQUESTS ----------*/
+Route::post('/save-country','API\UserDataController@saveCountry');

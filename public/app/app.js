@@ -3,13 +3,12 @@
  */
 'use strict';
 
-var fmApp = angular.module('fm_app',['ngRoute','fm_app.home','fm_app.contact_info']);
+var fmApp = angular.module('fm_app',['ngRoute','fm_app.home','fm_app.contact_info','fm_app.idea']);
 
 fmApp.config(['$routeProvider',function($routeProvider){
     $routeProvider
         .when('/',{
-            templateUrl: 'app/home/home.html',
-            controller: 'HomeController'
+            redirectTo : '/home'
         })
         .when('/home',{
             templateUrl:'app/home/home.html',
@@ -33,24 +32,7 @@ fmApp.config(['$routeProvider',function($routeProvider){
 }]);
 
 fmApp.controller('AppController',['$http','$scope',function($http,$scope){
-    $scope.sessionId;
 
-    $scope.countryList;
-
-    $scope.init = function()
-    {
-        $http.get('initialize').success(function(data){
-            $scope.sessionId = data.session_id;
-            $scope.countryList = data.countries;
-        })
-            .error(function(data){
-                console.log("Error : " + data);
-            });
-
-        $scope.area_residence = "";
-    };
-
-    $scope.init();
 
 }]);
 

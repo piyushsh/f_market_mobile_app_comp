@@ -34,5 +34,6 @@
     <script src="{{asset('app/app.js')}}"></script>
     <script src="{{asset('app/home/home.js')}}"></script>
     <script src="{{asset('app/personal_info/contact_info.js')}}"></script>
+    <script src="{{asset('app/idea/idea.js')}}"></script>
 </body>
 </html>

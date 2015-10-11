@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'url' => 'http://localhost',
+    'url' => 'http://localhost/Founders Market/App Form website/f_market_mobile_app_comp/',
 
     /*
     |--------------------------------------------------------------------------

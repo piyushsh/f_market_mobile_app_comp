@@ -1,4 +1,4 @@
-<div class="idea">
+<div class="idea" ng-controller="TeamController">
 
     <div class="container">
         <div class="row intro_paragraph">
@@ -24,13 +24,15 @@
                 <div class="row">
                     <div class="col-xs-12 col-md-4">
                         <div class="input_fd_cont">
-                            <input type="text" name="idea_title" ng-model="idea_title" value="*Name of Idea">
+                            <input type="text" name="idea_title" ng-model="idea_title" value="*Name of Idea"
+                                    ng-focus="fillTextBox('idea_title')" ng-blur="fillTextBox('idea_title')">
                         </div>
                     </div>
 
                     <div class="col-xs-12 col-md-4">
                         <div class="input_fd_cont">
-                            <input type="text" name="total_team_member" ng-model="total_team_membertotal_team_member" value="*Number of people involved">
+                            <input type="text" name="total_team_member" ng-model="total_team_member" value="*Number of people involved"
+                                   ng-keyup="numberOfTeamMembers()" ng-focus="fillTextBox('total_team_member')" ng-blur="fillTextBox('total_team_member')">
                         </div>
                     </div>
 
@@ -38,24 +40,12 @@
 
                 <div class="row">
 
-                    <div class="col-xs-12 col-md-4">
-                        <div class="input_fd_cont">
-                            <input type="text" name="team_email_address[]" ng-model="team_email_address" value="*Email address of others involved">
+                        <div class="col-xs-12 col-md-4" ng-repeat="textbox in team_email_address">
+                            <div class="input_fd_cont">
+                                <input type="text" name="team_email_address[]" ng-model="textbox.text" placeholder="*Email address of others Involved"
+                                       ng-focus="fillTextBox('textbox.text')" ng-blur="fillTextBox('textbox.text')">
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="col-xs-12 col-md-4">
-                        <div class="input_fd_cont">
-                            <input type="text" name="team_email_address[]" ng-model="team_email_address" value="*Email address of others involved">
-                        </div>
-                    </div>
-
-                    <div class="col-xs-12 col-md-4">
-                        <div class="input_fd_cont">
-                            <input type="text" name="team_email_address[]" ng-model="team_email_address" value="*Email address of others involved">
-                        </div>
-                    </div>
-
                 </div>
 
                 <div class="row">

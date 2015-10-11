@@ -76,7 +76,7 @@ h3,h4,h5,h6
   line-height: 100%;
 
 }
-input[type='text'],input[type='password'],input[type='file'],select,textarea
+input,input[type='text'],input[type='password'],input[type='file'],select,textarea
 {
   background:$background-lightGrey;
   color:$text-color;

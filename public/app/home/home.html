@@ -1,4 +1,4 @@
-<div class="home_page">
+<div class="home_page" ng-controller="HomeController">
 
     <div class="container">
         <div class="row intro_paragraph">
@@ -15,14 +15,16 @@
                 <p><label class="label">Please select your area of residence:</label></p>
 
                 <div class="input_fd_cont">
-                    <select name="area_residence" ng-model="area_residence">
+                    <p class="alert alert-danger text-left" ng-show="countryError == true">Please select an option.</p>
+                    <p class="alert alert-danger text-left" ng-show="serverError == true">While saving the country, some error occured at server side. Please try again later.</p>
+                    <select name="area_residence" ng-model="area_residence" ng-change="optionChange()">
                         <option value="">Select your area of residence</option>
                         <option ng-repeat="option in countryList" value="{{option.key}}">{{option.country}}</option>
                     </select>
                 </div>
 
                 <div class="input_fd_cont">
-                    <button type="button" class="next_step_button">Next step!</button>
+                    <button type="button" class="next_step_button" ng-click="nextStep()">Next step!</button>
                 </div>
             </div>
         </div>

@@ -13,9 +13,19 @@ fmAppContact.controller('ContactPageController',['$http','$scope',function($http
     var phoneNumberText = "*Phone number";
 
     $scope.init = function(){
-        $scope.email = emailText;
-        $scope.confirm_email = confirmEmailText;
-        $scope.phone_number = phoneNumberText;
+
+        $http.get('user-data')
+            .success(function(data){
+                console.log(data);
+                $scope.email = data.email != "" ? data.email : emailText;
+                $scope.confirm_email = data.email != "" ? data.email : confirmEmailText;
+                $scope.phone_number = data.contact_no != "" ? data.contact_no : phoneNumberText;
+            })
+            .error(function(data){
+
+            });
+
+
     };
 
     $scope.fillTextBox = function(field){

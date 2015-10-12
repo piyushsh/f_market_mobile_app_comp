@@ -18,21 +18,23 @@
         </div>
 
 
-        <div class="row">
+        <div class="row" ng-form="idea_team_form">
             <div class="col-xs-12 col-md-12">
                 <h2>Your Idea:</h2>
                 <div class="row">
                     <div class="col-xs-12 col-md-4">
+                        <p class="alert alert-danger" ng-show="ideaTitleError">Please provide a title of your idea.</p>
                         <div class="input_fd_cont">
-                            <input type="text" name="idea_title" ng-model="idea_title" value="*Name of Idea"
-                                    ng-focus="fillTextBox('idea_title')" ng-blur="fillTextBox('idea_title')">
+                            <input type="text" name="idea_title" ng-model="idea_title" placeholder="*Name of Idea" required
+                                    ng-keyup="ideaTitleError=false">
                         </div>
                     </div>
 
                     <div class="col-xs-12 col-md-4">
+                        <p class="alert alert-danger" ng-show="totalTeamCountError">Please specify number of team members.</p>
                         <div class="input_fd_cont">
-                            <input type="text" name="total_team_member" ng-model="total_team_member" value="*Number of people involved"
-                                   ng-keyup="numberOfTeamMembers()" ng-focus="fillTextBox('total_team_member')" ng-blur="fillTextBox('total_team_member')">
+                            <input type="number" name="total_team_member" ng-model="total_team_member" placeholder="*Number of people involved"
+                                   ng-keyup="numberOfTeamMembers()" required max="9">
                         </div>
                     </div>
 
@@ -40,10 +42,10 @@
 
                 <div class="row">
 
-                        <div class="col-xs-12 col-md-4" ng-repeat="textbox in team_email_address">
+                        <div class="col-xs-12 col-md-4" ng-repeat="team_email in team_email_address track by $index" ng-form="team_email_form">
+                            <p class="alert alert-danger" ng-show="showTeamEmailError(team_email_form.team_email_address,'email')">Please provide unique and correct email address.</p>
                             <div class="input_fd_cont">
-                                <input type="text" name="team_email_address[]" ng-model="textbox.text" placeholder="*Email address of others Involved"
-                                       ng-focus="fillTextBox('textbox.text')" ng-blur="fillTextBox('textbox.text')">
+                                <input type="email" name="team_email_address" ng-model="team_email_address[$index]" placeholder="*Email address of others Involved" required>
                             </div>
                         </div>
                 </div>
@@ -51,7 +53,7 @@
                 <div class="row">
                     <div class="col-xs-12 col-md-6 col-md-offset-3">
                         <div class="input_fd_cont">
-                            <button type="button" class="next_step_button">Next step!</button>
+                            <button type="button" class="next_step_button" ng-click="nextStep()">Next step!</button>
                         </div>
                     </div>
                 </div>

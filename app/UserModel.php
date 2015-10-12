@@ -14,4 +14,14 @@ class UserModel extends Model
 
     public $timestamps = false;
 
+
+    /**
+     * Relationship between Users and idea
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function idea()
+    {
+        return $this->hasOne("App\IdeaModel","user_id");
+    }
+
 }

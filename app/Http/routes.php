@@ -26,3 +26,7 @@ Route::get('/user-data','API\WelcomeAPIController@userData');
 
 /*---------- POSTS REQUESTS ----------*/
 Route::post('/save-country','API\UserDataController@saveCountry');
+Route::post('/personal-details','API\UserDataController@savePersonalDetails');
+Route::post('/idea-team','API\UserDataController@saveIdeaTeam');
+Route::post('/idea-details','API\UserDataController@saveIdeaDetails');
+Route::post('/idea-additional-info','API\UserDataController@saveIdeaAdditionalDetails');

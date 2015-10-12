@@ -4,13 +4,20 @@
 
 'use strict';
 
-var fmAppContact = angular.module('fm_app.contact_info',['ngRoute']);
+var REQUEST_STATUS = {request_status:"request_status",successful:"200",internal_error:"500",not_found:"404",validation_error:"422"};
 
-fmAppContact.controller('ContactPageController',['$http','$scope',function($http,$scope){
+var fmAppContact = angular.module('fm_app.contact_info',['ngRoute'])
+    .constant("REQUEST_STATUS", REQUEST_STATUS);
+
+fmAppContact.controller('ContactPageController',['$http','$scope','$location','REQUEST_STATUS',function($http,$scope,$location,REQUEST_STATUS){
 
     var emailText = "*Email address";
     var confirmEmailText = "*Confirm Email address";
     var phoneNumberText = "*Phone number";
+
+    $scope.emailError = false;
+    $scope.confirmEmailError = false;
+    $scope.phoneNumberError = false;
 
     $scope.init = function(){
 
@@ -63,6 +70,43 @@ fmAppContact.controller('ContactPageController',['$http','$scope',function($http
                 break;
         }
     };
+
+    $scope.nextStep = function(){
+
+        console.log("Test",$scope.personal_details.confirm_email);
+
+        if($scope.email == emailText || $scope.personal_details.email.$error['email'] || $scope.personal_details.email.$error['required'])
+        {
+            $scope.emailError = true;
+        }
+        if($scope.confirm_email == confirmEmailText || ($scope.confirm_email).toLowerCase() != ($scope.email).toLowerCase() || $scope.personal_details.confirm_email.$error['email'] || $scope.personal_details.confirm_email.$error['requied'])
+        {
+            $scope.confirmEmailError = true;
+        }
+        if($scope.phone_number == phoneNumberText || $scope.personal_details.phone_number.$error['required'])
+        {
+            $scope.phoneNumberError = true;
+        }
+
+        if($scope.emailError || $scope.confirmEmailError || $scope.phoneNumberError)
+        {
+            return false;
+        }
+
+
+        $http.post('personal-details',{
+            'email': $scope.email,
+            'contact_no' : $scope.phone_number
+        })
+            .success(function(data){
+                console.log("data",data);
+                $location.path('/idea-team');
+            })
+            .error(function(data){
+                console.log("data",data);
+            });
+    };
+
 
     $scope.init();
 

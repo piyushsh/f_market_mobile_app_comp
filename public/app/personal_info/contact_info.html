@@ -15,44 +15,44 @@
 
 
         <div class="row">
-            <div class="col-xs-12 col-md-12">
-                <h2>Your Personal Contact Info:</h2>
-                <div class="row">
-                    <div class="col-xs-12 col-md-4">
-                        <p class="alert alert-danger" ng-show="">Please provide your email address in correct format.</p>
-                        <div class="input_fd_cont">
-                            <input type="email" name="email" ng-model="email" value="*Email address"
-                                   ng-focus="fillTextBox('email')" ng-blur="fillTextBox('email')" required>
+                <div class="col-xs-12 col-md-12">
+                    <h2>Your Personal Contact Info:</h2>
+                    <div class="row" ng-form = "personal_details">
+                        <div class="col-xs-12 col-md-4">
+                            <p class="alert alert-danger" ng-show="emailError">Please provide your email address in correct format.</p>
+                            <div class="input_fd_cont">
+                                <input type="email" name="email" ng-model="email" value="*Email address"
+                                       ng-focus="fillTextBox('email')" ng-blur="fillTextBox('email')" required>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-md-4">
+                            <p class="alert alert-danger" ng-show="confirmEmailError">Confirm your email address correctly.</p>
+                            <div class="input_fd_cont">
+                                <input type="email" name="confirm_email" ng-model="confirm_email" value="*Confirm Email address"
+                                       ng-focus="fillTextBox('confirm_email')" ng-blur="fillTextBox('confirm_email')" required>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-md-4">
+                            <p class="alert alert-danger" ng-show="phoneNumberError">Please provide your phone number.</p>
+                            <div class="input_fd_cont">
+                                <input type="text" name="phone_number" ng-model="phone_number" value="*Phone number"
+                                       ng-focus="fillTextBox('phone_number')" ng-blur="fillTextBox('phone_number')" required>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="col-xs-12 col-md-4">
-                        <p class="alert alert-danger" ng-show="">Confirm your email address correctly.</p>
-                        <div class="input_fd_cont">
-                            <input type="email" name="confirm_email" ng-model="confirm_email" value="*Confirm Email address"
-                                   ng-focus="fillTextBox('confirm_email')" ng-blur="fillTextBox('confirm_email')" required>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6 col-md-offset-3">
+                            <div class="input_fd_cont">
+                                <button type="button" class="next_step_button" ng-click="nextStep()">Next step!</button>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="col-xs-12 col-md-4">
-                        <p class="alert alert-danger" ng-show="">Please provide your phone number.</p>
-                        <div class="input_fd_cont">
-                            <input type="text" name="phone_number" ng-model="phone_number" value="*Phone number"
-                                   ng-focus="fillTextBox('phone_number')" ng-blur="fillTextBox('phone_number')" required>
-                        </div>
-                    </div>
+
                 </div>
-
-                <div class="row">
-                    <div class="col-xs-12 col-md-6 col-md-offset-3">
-                        <div class="input_fd_cont">
-                            <button type="button" class="next_step_button">Next step!</button>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
         </div>
 
     </div>

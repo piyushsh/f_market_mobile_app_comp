@@ -15,7 +15,7 @@ class APIResponse {
 
     const SUCCESSFUL = "200";
     const INTERNAL_ERROR = "500";
-    const NOT_FOUND = "400";
+    const NOT_FOUND = "404";
     const VALIDATION_ERROR = "422";
 
 }

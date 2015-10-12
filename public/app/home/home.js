@@ -3,9 +3,12 @@
  */
 'use strict';
 
-var fmAppHome = angular.module('fm_app.home',['ngRoute']);
+var REQUEST_STATUS = {request_status:"request_status",successful:"200",internal_error:"500",not_found:"404",validation_error:"422"};
 
-    fmAppHome.controller('HomeController',['$http','$scope','$location',function($http,$scope,$location){
+var fmAppHome = angular.module('fm_app.home',['ngRoute'])
+    .constant("REQUEST_STATUS", REQUEST_STATUS);
+
+    fmAppHome.controller('HomeController',['$http','$scope','$location','REQUEST_STATUS',function($http,$scope,$location,REQUEST_STATUS){
         $scope.sessionId;
 
         $scope.countryList;
@@ -19,7 +22,7 @@ var fmAppHome = angular.module('fm_app.home',['ngRoute']);
                 $scope.sessionId = data.session_id;
                 $scope.countryList = data.countries;
                 $scope.area_residence = data.country;
-                console.log(data);
+                //console.log(data);
             })
                 .error(function(data){
 
@@ -30,13 +33,13 @@ var fmAppHome = angular.module('fm_app.home',['ngRoute']);
         };
 
         $scope.optionChange = function(){
-            console.log("Area",$scope.area_residence);
+
             $scope.countryError = false;
         };
 
         $scope.nextStep = function(){
-            console.log("Area",$scope.area_residence);
-            if($scope.area_residence == "")
+
+            if($scope.area_residence == "" || $scope.area_residence == undefined)
             {
                 $scope.countryError = true;
             }
@@ -59,11 +62,17 @@ var fmAppHome = angular.module('fm_app.home',['ngRoute']);
                         'user_session' : $scope.sessionId
                     })
                         .success(function(data){
-                            console.log("Reply",data);
-                            $location.path('/personal-contact');
+
+                            if(data[REQUEST_STATUS.request_status] == REQUEST_STATUS.successful)
+                            {
+                                $location.path('/personal-contact');
+                            }
+                            else if(data[REQUEST_STATUS.request_status] == REQUEST_STATUS.validation_error)
+                            {
+                                $scope.countryError = true;
+                            }
                         })
                         .error(function(data){
-                            console.log("Error Reply",data);
                             $scope.serverError = true;
                         });
                 }

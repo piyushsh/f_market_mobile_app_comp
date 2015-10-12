@@ -44,6 +44,7 @@ class UserIdeaTeamTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('user_id')->on('user')->onDelete('cascade');
 
+            $table->string("idea_title");
             $table->integer('total_team_members');
             $table->boolean('startup_experience')->default(0);
             $table->text('about_startup_experience')->nullable();
@@ -60,6 +61,7 @@ class UserIdeaTeamTable extends Migration
          * Team table
          */
         Schema::create('team',function(Blueprint $table){
+            $table->increments("id");
             $table->integer('idea_id')->unsigned();
             $table->foreign('idea_id')->references('idea_id')->on('idea')->onDelete('cascade');
 

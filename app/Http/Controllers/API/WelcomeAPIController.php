@@ -29,8 +29,9 @@ class WelcomeAPIController extends Controller
 
         if($request->session()->has(AppSession::USER_ID))
         {
-            $user = UserModel::find($request->session()->get(AppSession::USER_ID))->toArray();
-            $jsonArrayReply=array_merge($jsonArrayReply,$user);
+            $user = UserModel::find($request->session()->get(AppSession::USER_ID));
+            if($user!=null)
+                $jsonArrayReply=array_merge($jsonArrayReply,$user->toArray());
         }
 
         return response()->json($jsonArrayReply);
@@ -44,10 +45,29 @@ class WelcomeAPIController extends Controller
      */
     public function userData(Request $request)
     {
-        $user = UserModel::find($request->session()->get(AppSession::USER_ID))->toArray();
+        $user = UserModel::find($request->session()->get(AppSession::USER_ID));
 
         $jsonResponse = [APIResponse::REQUEST_STATUS=>APIResponse::SUCCESSFUL];
-        $jsonResponse = array_merge($jsonResponse,$user);
+        if($user!=null)
+        {
+            $jsonResponse = array_merge($jsonResponse,$user->toArray());
+            $idea = $user->idea;
+            if($idea!=null)
+            {
+                $jsonResponse = array_merge($jsonResponse,$idea->toArray());
+                $teamMembers = $idea->teamMembers;
+                if($teamMembers!=null)
+                {
+                    $teamMemberEmails = [];
+                    foreach($teamMembers as $key=>$value)
+                    {
+                        array_push($teamMemberEmails,$value->team_member_email);
+                    }
+                    $jsonResponse = array_merge($jsonResponse,["team_member_emails"=>$teamMemberEmails]);
+                }
+            }
+
+        }
 
         return response()->json($jsonResponse);
     }

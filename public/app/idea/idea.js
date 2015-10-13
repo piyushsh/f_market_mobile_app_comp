@@ -37,7 +37,7 @@ fm_app_idea.controller('TeamController',['$http','$scope','$location','REQUEST_S
                    }
                    $scope.idea_title = data.idea_title;
                    $scope.total_team_member = data.total_team_members;
-                   $scope.team_email_address = data.team_member_emails;
+                   $scope.team_email_address = data.team_member_emails == undefined ? [""] : data.team_member_emails;
                }
             })
             .error(function(data){
@@ -148,7 +148,7 @@ fm_app_idea.controller('IdeaDetailController',['$http','$scope','$location',func
             .success(function(data){
                 if(data[REQUEST_STATUS.request_status] == REQUEST_STATUS.successful)
                 {
-                    console.log(data.startup_experience);
+                    console.log(data);
                     if(data.user_id == undefined || data.user_id == null)
                     {
                         $location.path('/');
@@ -199,9 +199,24 @@ fm_app_idea.controller('IdeaDetailController',['$http','$scope','$location',func
 
 }]);
 
+fm_app_idea.directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            element.bind('change', function(){
+                console.log("Image Changes:");
+                $parse(attrs.fileModel)
+                    .assign(scope, element[0].files);
+                scope.$apply();
+            });
+        }
+    };
+}]);
+
 
 fm_app_idea.controller('IdeaOtherDetailController',['$http','$scope','$location',function($http,$scope,$location){
 
+    $scope.fileUploadError = false;
 
     $scope.init = function(){
 
@@ -222,22 +237,66 @@ fm_app_idea.controller('IdeaOtherDetailController',['$http','$scope','$location'
             });
     };
 
+    $scope.filesChanaged = function(elm)
+    {
+        $scope.designs = elm.files;
+        $scope.$apply();
+    };
+
 
     $scope.nextStep = function(){
 
-        if($scope.idea_detail_form.$valid)
+        $scope.fileUploadError=false;
+        var total_size = 0;
+        var total_size_limit = (10*1024*1024);
+        var individual_file_limit = (2*1024*1024);
+        var allowed_file_ext = ['jpg','jpeg','png','bmp','pdf','gif'];
+        angular.forEach($scope.designs, function(file){
+            total_size+=file.size;
+            var file_name = file.name;
+            var ext = file_name.split(".");
+            ext = ext[ext.length-1];
+            if(file.size > individual_file_limit)
+            {
+                $scope.fileUploadError = true;
+            }
+
+            if(allowed_file_ext.indexOf(ext.toLowerCase())<0)
+            {
+                $scope.fileUploadError = true;
+            }
+        });
+
+        if($scope.fileUploadError || total_size > total_size_limit)
         {
-            $http.post('idea-additional-info',{
-                'startup_exp':$scope.startup_exp,
-                'startup_about':$scope.startup_about,
-                'idea':$scope.idea
+            $scope.fileUploadError=true;
+            return false;
+        }
+
+
+
+        if($scope.idea_other_detail_form.$valid)
+        {
+            var fd = new FormData();
+
+            angular.forEach($scope.designs, function(file){
+                fd.append('file[]',file);
+                console.log(file);
+            });
+            console.dir($scope.designs);
+            fd.append('additional_info',$scope.additional_info);
+
+            console.log("Form:" , fd);
+            $http.post('idea-additional-info', fd,{
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
             })
                 .success(function(data){
-                    console.log(data);
-                    $location.path('/idea-other-detail');
+                    console.log("Success",data);
+                    $location.path('/thank-you');
                 })
                 .error(function(data){
-                    console.log(data);
+                    console.log("Error",data);
                 });
         }
 

@@ -11,10 +11,18 @@ use App\UserModel;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class UserDataController extends Controller
 {
+
+    const STORAGE_FILE_DIRECTORY = "storage/app/idea-competition";
+
+
     /**
      * Saving Country of the User
      * @param Request $request
@@ -139,8 +147,31 @@ class UserDataController extends Controller
      */
     public function saveIdeaAdditionalDetails(Request $request)
     {
+        $path_for_user = (self::STORAGE_FILE_DIRECTORY."/designs_".$request->session()->get(AppSession::USER_ID));
+        $jsonReply = array_merge([APIResponse::REQUEST_STATUS=>APIResponse::SUCCESSFUL],$request->all());
+        $files = Input::file("file");
+        if(count($files)>0)
+        {
+            foreach($files as $key=>$file)
+            {
+                $file->move(public_path()."/".$path_for_user,$file->getClientOriginalName());
+            }
+        }
 
-        return response()->json([APIResponse::REQUEST_STATUS=>APIResponse::SUCCESSFUL]);
+        $idea = IdeaModel::where('user_id','=',$request->session()->get(AppSession::USER_ID))->first();
+
+        $idea->additional_information = $request->additional_info;
+        $idea->app_designs_link = asset($path_for_user);
+        $idea->save();
+
+        $user = UserModel::find($request->session()->get(AppSession::USER_ID));
+        $teamMember = $idea->teamMembers;
+
+        Mail::send('email.confirm', [], function ($m) use ($user,$teamMember) {
+            $m->to($user->email)->subject('Founders Market :: Thanks for Registering form the Competition');
+        });
+
+        return response()->json([APIResponse::REQUEST_STATUS=>APIResponse::SUCCESSFUL,"path"=>storage_path($path_for_user)]);
     }
 
 

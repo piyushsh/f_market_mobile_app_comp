@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="fm_app">
+<html>
 <head lang="en">
     <meta charset="UTF-8">
     <title>Founders Market</title>
@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{asset('css/app-style.css')}}">
 
 </head>
-<body ng-controller="AppController">
+<body>
 
     <header>
         <div class="container">
@@ -21,21 +21,12 @@
         </div>
     </header>
 
-    <div ng-view></div>
-
     @yield("content")
 
 
     <!--- Adding all the scripts for the site -->
     <script src="{{asset('js/jquery-1.11.3.min.js')}}"></script>
-    <script src="{{asset('js/angular.min.js')}}"></script>
-    <script src="{{asset('js/angular-route.min.js')}}"></script>
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
 
-    <!-- Angular Script Files -->
-    <script src="{{asset('app/app.js')}}"></script>
-    <script src="{{asset('app/home/home.js')}}"></script>
-    <script src="{{asset('app/personal_info/contact_info.js')}}"></script>
-    <script src="{{asset('app/idea/idea.js')}}"></script>
 </body>
 </html>

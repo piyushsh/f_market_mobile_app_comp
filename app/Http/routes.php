@@ -12,19 +12,22 @@
 */
 
 Route::get('/', 'WelcomeController@index');
+Route::get('/idea-other-detail','WelcomeController@ideaOtherDetail');
 
+//=========== POST ==========
+Route::post('/save-idea-additional-info',"IdeaController@saveIdeaOtherDetails");
 
 /*
  * API Routes
  */
 
-/*---------- GET REQUESTS ------------*/
+/*---------- REST GET REQUESTS ------------*/
 Route::get('/initialize','API\WelcomeAPIController@initializeWelcomeView');
 Route::get('/user-data','API\WelcomeAPIController@userData');
 
 
 
-/*---------- POSTS REQUESTS ----------*/
+/*---------- REST POSTS REQUESTS ----------*/
 Route::post('/save-country','API\UserDataController@saveCountry');
 Route::post('/personal-details','API\UserDataController@savePersonalDetails');
 Route::post('/idea-team','API\UserDataController@saveIdeaTeam');

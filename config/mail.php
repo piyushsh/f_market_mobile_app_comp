@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => null, 'name' => null],
+    'from' => ['address' => 'no-reply@foundersmarketapp.com', 'name' => 'Founders Market Team'],
 
     /*
     |--------------------------------------------------------------------------

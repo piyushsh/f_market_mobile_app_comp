@@ -27,4 +27,14 @@ class WelcomeController extends Controller
         $this->appSession->initalizeNewUser($request->session());
         return view('app');
     }
+
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
+    public function ideaOtherDetail(Request $request)
+    {
+        return view('partials.idea-other-details');
+    }
 }

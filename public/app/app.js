@@ -37,3 +37,38 @@ fmApp.controller('AppController',['$http','$scope',function($http,$scope){
 }]);
 
 
+
+var fmAppServices = angular.module('fm_app.services',[]);
+fmAppServices.factory('popUpService',['$animate',function(){
+    var overlayClass = ".overlay";
+    var popUpContainer = ".pop_up_container";
+    var popUpBox = ".pop_up_box"
+    var popUpLoading = ".loading_box"
+
+    var overlayElement = angular.element(overlayClass);
+    var popUpContainer = angular.element(popUpContainer);
+    var popUpBox = angular.element(popUpBox);
+
+    var showLoadingPopUp = function(){
+        overlayElement.show();
+        popUpContainer.show();
+        angular.element(popUpLoading).show();
+        setPopBoxPosition();
+    };
+
+    var hideLoadingPopUp = function(){
+        overlayElement.hide();
+        popUpContainer.hide();
+        angular.element(popUpLoading).hide();
+    };
+
+    var setPopBoxPosition = function(){
+        var popUpWidth = popUpBox.width();
+        var popUpContainerWidth = popUpContainer.width();
+        jQuery(popUpBox).css('margin-left', (popUpContainerWidth - popUpWidth) / 2);
+    };
+
+    return {showLoadingPopUp : showLoadingPopUp, hideLoadingPopUp : hideLoadingPopUp};
+}]);
+
+

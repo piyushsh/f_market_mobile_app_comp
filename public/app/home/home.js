@@ -5,10 +5,10 @@
 
 var REQUEST_STATUS = {request_status:"request_status",successful:"200",internal_error:"500",not_found:"404",validation_error:"422"};
 
-var fmAppHome = angular.module('fm_app.home',['ngRoute'])
+var fmAppHome = angular.module('fm_app.home',['fm_app.services','ngRoute'])
     .constant("REQUEST_STATUS", REQUEST_STATUS);
 
-    fmAppHome.controller('HomeController',['$http','$scope','$location','REQUEST_STATUS',function($http,$scope,$location,REQUEST_STATUS){
+    fmAppHome.controller('HomeController',['$http','$scope','$location','REQUEST_STATUS','popUpService',function($http,$scope,$location,REQUEST_STATUS,popUpService){
         $scope.sessionId;
 
         $scope.countryList;
@@ -56,7 +56,7 @@ var fmAppHome = angular.module('fm_app.home',['ngRoute'])
                 if($scope.countryError == false)
                 {
                     $scope.serverError = false;
-
+                    popUpService.showLoadingPopUp();
                     $http.post('save-country',{
                         'country' : $scope.area_residence,
                         'user_session' : $scope.sessionId
@@ -74,6 +74,9 @@ var fmAppHome = angular.module('fm_app.home',['ngRoute'])
                         })
                         .error(function(data){
                             $scope.serverError = true;
+                        })
+                        .finally(function() {
+                            popUpService.hideLoadingPopUp();
                         });
                 }
             }

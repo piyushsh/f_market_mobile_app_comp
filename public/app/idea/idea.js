@@ -10,10 +10,10 @@ var teamMemberEmailText = "*Email address of others Involved";
 
 var REQUEST_STATUS = {request_status:"request_status",successful:"200",internal_error:"500",not_found:"404",validation_error:"422"};
 
-var fm_app_idea = angular.module("fm_app.idea",[])
+var fm_app_idea = angular.module("fm_app.idea",['fm_app.services'])
     .constant("REQUEST_STATUS", REQUEST_STATUS);
 
-fm_app_idea.controller('TeamController',['$http','$scope','$location','REQUEST_STATUS',function($http,$scope,$location,REQUEST_STATUS){
+fm_app_idea.controller('TeamController',['$http','$scope','$location','REQUEST_STATUS','popUpService',function($http,$scope,$location,REQUEST_STATUS,popUpService){
 
     var nextButClicked = false;
 
@@ -108,6 +108,7 @@ fm_app_idea.controller('TeamController',['$http','$scope','$location','REQUEST_S
 
         if($scope.idea_team_form.$valid)
         {
+            popUpService.showLoadingPopUp();
             $http.post('idea-team',{
                 'idea_title':$scope.idea_title,
                 'total_team_member':$scope.total_team_member,
@@ -119,6 +120,9 @@ fm_app_idea.controller('TeamController',['$http','$scope','$location','REQUEST_S
                 })
                 .error(function(data){
                     console.log(data);
+                })
+                .finally(function(){
+                    popUpService.hideLoadingPopUp();
                 });
         }
 
@@ -137,7 +141,7 @@ fm_app_idea.controller('TeamController',['$http','$scope','$location','REQUEST_S
 }]);
 
 
-fm_app_idea.controller('IdeaDetailController',['$http','$scope','$location',function($http,$scope,$location){
+fm_app_idea.controller('IdeaDetailController',['$http','$scope','$location','popUpService',function($http,$scope,$location,popUpService){
 
     var nextButClicked=false;
 
@@ -170,6 +174,8 @@ fm_app_idea.controller('IdeaDetailController',['$http','$scope','$location',func
 
         if($scope.idea_detail_form.$valid)
         {
+            popUpService.showLoadingPopUp();
+
             $http.post('idea-details',{
                 'startup_exp':$scope.startup_exp,
                 'startup_about':$scope.startup_about,
@@ -181,6 +187,9 @@ fm_app_idea.controller('IdeaDetailController',['$http','$scope','$location',func
                 })
                 .error(function(data){
                     console.log(data);
+                })
+                .finally(function(){
+                    popUpService.hideLoadingPopUp();
                 });
             nextButClicked=false;
         }
@@ -214,7 +223,7 @@ fm_app_idea.directive('fileModel', ['$parse', function ($parse) {
 }]);
 
 
-fm_app_idea.controller('IdeaOtherDetailController',['$http','$scope','$location',function($http,$scope,$location){
+fm_app_idea.controller('IdeaOtherDetailController',['$http','$scope','$location','popUpService',function($http,$scope,$location,popUpService){
 
     $scope.fileUploadError = false;
 
@@ -249,23 +258,29 @@ fm_app_idea.controller('IdeaOtherDetailController',['$http','$scope','$location'
         $scope.fileUploadError=false;
         var total_size = 0;
         var total_size_limit = (10*1024*1024);
-        var individual_file_limit = (2*1024*1024);
+        var individual_file_limit = (3*1024*1024);
         var allowed_file_ext = ['jpg','jpeg','png','bmp','pdf','gif'];
         angular.forEach($scope.designs, function(file){
             total_size+=file.size;
             var file_name = file.name;
             var ext = file_name.split(".");
             ext = ext[ext.length-1];
+            //console.log("File Size",file.size);
+
             if(file.size > individual_file_limit)
             {
                 $scope.fileUploadError = true;
+                //console.log("Individual file size Error");
             }
 
             if(allowed_file_ext.indexOf(ext.toLowerCase())<0)
             {
                 $scope.fileUploadError = true;
+                //console.log("Extension Error");
             }
         });
+
+        //console.log("Total File Size",total_size + " --- " + total_size_limit);
 
         if($scope.fileUploadError || total_size > total_size_limit)
         {
@@ -287,6 +302,7 @@ fm_app_idea.controller('IdeaOtherDetailController',['$http','$scope','$location'
             fd.append('additional_info',$scope.additional_info);
 
             console.log("Form:" , fd);
+            popUpService.showLoadingPopUp();
             $http.post('idea-additional-info', fd,{
                 transformRequest: angular.identity,
                 headers: {'Content-Type': undefined}
@@ -297,6 +313,9 @@ fm_app_idea.controller('IdeaOtherDetailController',['$http','$scope','$location'
                 })
                 .error(function(data){
                     console.log("Error",data);
+                })
+                .finally(function(){
+                    popUpService.hideLoadingPopUp();
                 });
         }
 

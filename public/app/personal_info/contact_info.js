@@ -6,10 +6,10 @@
 
 var REQUEST_STATUS = {request_status:"request_status",successful:"200",internal_error:"500",not_found:"404",validation_error:"422"};
 
-var fmAppContact = angular.module('fm_app.contact_info',['ngRoute'])
+var fmAppContact = angular.module('fm_app.contact_info',['ngRoute','fm_app.services'])
     .constant("REQUEST_STATUS", REQUEST_STATUS);
 
-fmAppContact.controller('ContactPageController',['$http','$scope','$location','REQUEST_STATUS',function($http,$scope,$location,REQUEST_STATUS){
+fmAppContact.controller('ContactPageController',['$http','$scope','$location','REQUEST_STATUS','popUpService',function($http,$scope,$location,REQUEST_STATUS,popUpService){
 
     var emailText = "*Email address";
     var confirmEmailText = "*Confirm Email address";
@@ -72,6 +72,9 @@ fmAppContact.controller('ContactPageController',['$http','$scope','$location','R
     };
 
     $scope.nextStep = function(){
+        $scope.emailError = false;
+        $scope.confirmEmailError = false;
+        $scope.phoneNumberError = false;
 
         console.log("Test",$scope.personal_details.confirm_email);
 
@@ -93,6 +96,7 @@ fmAppContact.controller('ContactPageController',['$http','$scope','$location','R
             return false;
         }
 
+        popUpService.showLoadingPopUp();
 
         $http.post('personal-details',{
             'email': $scope.email,
@@ -104,6 +108,9 @@ fmAppContact.controller('ContactPageController',['$http','$scope','$location','R
             })
             .error(function(data){
                 console.log("data",data);
+            })
+            .finally(function(){
+                popUpService.hideLoadingPopUp();
             });
     };
 

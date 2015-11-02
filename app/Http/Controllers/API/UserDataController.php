@@ -171,7 +171,10 @@ class UserDataController extends Controller
             $m->to($user->email)->subject('Founders Market :: Thanks for Registering form the Competition');
         });
 
-        return response()->json([APIResponse::REQUEST_STATUS=>APIResponse::SUCCESSFUL,"path"=>storage_path($path_for_user)]);
+        Mail::send('email.internal.new_registration', ['user'=>$user,'idea'=>$idea,'teamMember'=>$teamMember], function ($m) use ($user) {
+            $m->to("philip@foundersmarketapp.com")->cc("izaac@foundersmarketapp.com")->subject('Founders Market :: New user registered for Idea Competition');
+        });
+
     }
 
 
